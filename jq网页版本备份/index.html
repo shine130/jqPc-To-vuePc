@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=320,user-scalable=yes,minimum-scale=0.01,maximum-scale=1" />
+  <title></title>
+  <style>
+    body,html,ul,li,p{margin:0; padding:0}
+    ul,li{list-style: none;}
+    .slide{width: 1440px; margin:0 auto; height: 300px;  overflow:hidden; position:relative;}
+    .slideFul {width:1440px; position:absolute; left:0;top:0; }
+.slideFul li{position:absolute; display: none;}
+.slideBtn {position:absolute; z-index:99; bottom:10px; width:100%; text-align:center;}
+.slideBtn span{display: inline-block; background-color:#ccc; width: 10px; height: 10px; border-radius: 50%; color:#000; cursor:pointer;}
+.slideBtn span.on{color:#fff; background-color:#000;}
+.preBtn,.nextBtn{position: absolute; border: 1px solid #000000; z-index: 99; top:300px; background-color: #fff; cursor:pointer; }
+.nextBtn{right: 10px;}
+    .pdbox{overflow: hidden; width: 1200px; margin: 0 auto; padding-top: 20px;}
+    .pdbox a{color: #000; text-decoration: none;}
+    .pdbox .item{float: left; display: inline; width: 200px; margin:20px; text-align: center;}
+    .pdbox .pic{display: inline-block; width: 150px; height: 150px;}
+    .pdbox .title{text-align: center; padding-top: 8px;}
+    .botimg{ width: 100%; text-align: center; padding-top: 70px;}
+    @media screen and (max-width:1000px){
+      /* .slide{height: 600px;}
+      .slide img{height: 600px;} */
+      .pdbox{width: 1440px; padding-left: 20px;}
+      .botimg{width: 1440px;}
+      .pdbox .item{width: 30%; box-sizing: border-box; text-align: center;}
+      .pdbox .pic{width: 320px; height: 320px;}
+      .pdbox .title{font-size: 38px; padding-top: 20px;}
+    }
+  </style>
+</head>
+<body>
+    <div class="slide" id="slide">
+      <ul class="slideFul" id="slideFul">
+      </ul>
+      <div class="slideBtn" id="slideBtn">
+      </div>
+      <span class="preBtn"></span>
+      <span class="nextBtn"></span>
+    </div>
+
+    <ul class="pdbox" id="pdbox">
+    </ul>
+<div class="botimg"><img src="bt.jpg" alt="" width="1200" height="80"></div>
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script src="slides.js"></script>
+<script>
+
+
+
+  $.ajax({
+    url:'http://suti.jinlinkj.cn/api/api/home',
+    type:'GET',
+    dataType:'json',
+    success:function(data){
+      // console.log(data)
+      var bannerImgArr = data.banner;
+      var productArr = data.product;
+      var ban_html = '';
+      var slidbtn_html = '';
+      var product_html = '';
+      var slideFul = $('#slideFul');
+      var slideBtn = $('#slideBtn');
+      var pdbox = $('#pdbox');
+      for(var i = 0;i<bannerImgArr.length; i++){
+        ban_html += '<li><img src="'+bannerImgArr[i].img_url+'" alt=""></li>';
+        slidbtn_html += '<span class=""></span>';
+      }
+      slideFul.html(ban_html);
+      slideBtn.html(slidbtn_html);
+      $("#slide").focusSlide();
+
+      for(var pd = 0; pd < productArr.length ; pd++){
+        var product_name = productArr[pd].product_name;
+        var product_img = productArr[pd].product_img;
+        var product_id = productArr[pd].product_id;
+        product_html += '<li class="item"><a href="pic.html?product_id='+product_id+'"><img class="pic" src="'+product_img+'" alt=""><p class="title">'+product_name+'</p></a></li>';
+      }
+
+      pdbox.html(product_html);
+
+    }
+
+  })
+</script>
+</body>
+</html>

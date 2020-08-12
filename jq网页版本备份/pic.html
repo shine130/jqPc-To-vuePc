@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=320,user-scalable=yes,minimum-scale=0.01,maximum-scale=1" />
+  <title></title>
+  <style>
+    .pdbox{overflow: hidden; width: 1200px; margin: 0 auto; padding-top: 20px;}
+    .pdbox a{color: #000; text-decoration: none;}
+    .pdbox .item{float: left; display: inline; width: 200px; margin:20px; text-align: center;}
+    .pdbox .pic{width: 150px; height: 150px;}
+    .pdbox .title{text-align: center; padding-top: 8px;}
+    .pdname{text-align: center; padding:20px; font-weight: bold;}
+    #fancybox-buttons{display: none;}
+  </style>
+</head>
+<body>
+  <div class="pdname" id="pdname">标题</div>
+  <ul class="pdbox" id="pdbox">
+  </ul>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+	<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="fancybox/jquery.fancybox.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox.css" media="screen" />
+<!-- Add Button helper (this is optional) -->
+	<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-buttons.css" />
+  <script type="text/javascript" src="fancybox/jquery.fancybox-buttons.js"></script>
+  
+  <script>
+      var siteUlr = window.location.search;
+      var pid = siteUlr.slice(12,siteUlr.length);
+      var pdbox = $('#pdbox');
+      var pdnamebox = $('#pdname');
+      console.log('id:'+pid)
+      $.ajax({
+        url:'http://suti.jinlinkj.cn/api/api/product_detail',
+        type:'POST',
+        data:{
+	      "product_id":pid
+        },
+        dataType:'json',
+        success:function(data){
+          var productImgArr = data.product_img;
+          var product_html = '';
+          var pdname = data.product_name;
+          pdnamebox.html(pdname);
+          for(var i = 0 ; i < productImgArr.length; i ++){
+            var pdetail_img = productImgArr[i].pdetail_img;
+            var pdetail_name = productImgArr[i].pdetail_name;
+            product_html += '<li class="item"><a href="'+pdetail_img+'" data-fancybox-group="picgroup"><img class="pic" src="'+pdetail_img+'" alt=""><p class="title">'+pdetail_name+'</p></a></li>'
+          }
+          pdbox.html(product_html);
+        }
+      })
+
+    		$('#pdbox a:has(img)').fancybox({
+				openEffect  : 'none',
+				closeEffect : 'none',
+				prevEffect : 'none',
+				nextEffect : 'none',
+				closeBtn  : false,
+				helpers : {
+					title : {
+						type : 'inside'
+					},
+					buttons	: {}
+				},
+				afterLoad : function() {
+					this.title = 'Image ' + (this.index + 1) + ' of ' + this.group.length + (this.title ? ' - ' + this.title : '');
+				}
+			});
+
+  </script>
+</body>
+</html>
