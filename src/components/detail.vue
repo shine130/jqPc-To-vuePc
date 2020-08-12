@@ -1,7 +1,8 @@
 <template>
   <div class="page">
+      <div class="pdname" id="pdname">{{product_name}}</div>
    <ul class="pdbox" id="pdbox">
-     <li v-for="item in product_img" :key="item.product_id" class="item"><a :href="item.pdetail_img" data-fancybox-group="picgroup"><img class="pic" :src="item.pdetail_img" alt=""><p class="title">{{item.pdetail_name}}</p></a>
+     <li v-for="item in product_img" :key="item.pdetail_id" class="item"><a :href="item.pdetail_img" data-fancybox-group="picgroup"><img class="pic" :src="item.pdetail_img" alt=""><p class="title">{{item.pdetail_name}}</p></a>
      </li>
      </ul>
   </div>
@@ -12,7 +13,8 @@ import axios from 'axios';
 export default {
   data:function(){
     return {
-      product_img:[]
+      product_img:[],
+      product_name:""
     }
   },
   created:function(){
@@ -24,7 +26,9 @@ export default {
       product_id:pid
     }
       ).then((res) => {
+        // console.log(res)
         this.product_img = res.data.product_img;
+        this.product_name = res.data.product_name;
     } )
 
   }

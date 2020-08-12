@@ -2,8 +2,15 @@
   <div class="page">
 
 <div class="slide" id="slide">
-      <ul class="slideFul" id="slideFul"><li style="display: list-item;"><img src="http://suti.jinlinkj.cn/uploads/images/2020/c23d1d4fe6bc8872a0e550965f6a49bc.jpeg" alt=""></li></ul>
-      <div class="slideBtn" id="slideBtn"><span class="on"></span></div>
+      <ul class="slideFul" id="slideFul">
+        <li style="display: list-item;"><img src="http://suti.jinlinkj.cn/uploads/images/2020/c23d1d4fe6bc8872a0e550965f6a49bc.jpeg" alt="">
+        </li>
+        <li style="display: list-item;"><img src="http://suti.jinlinkj.cn/uploads/images/2020/c23d1d4fe6bc8872a0e550965f6a49bc.jpeg" alt=""></li>
+        </ul>
+      <div class="slideBtn" id="slideBtn">
+        <span></span>
+        <span></span>
+        </div>
       <span class="preBtn"></span>
       <span class="nextBtn"></span>
     </div>
@@ -24,11 +31,6 @@ import axios from 'axios';
 import $ from 'jquery';
 import focusSlide from '../assets/js/slides.js';
 
- var ele = $('#slide');
-// ele.focusSlide();
-
- console.log(ele)
-
 export default {
   data:function(){
     return {
@@ -41,6 +43,10 @@ export default {
     axios.get('http://suti.jinlinkj.cn/api/api/home').then((res) => {
       this.product = res.data.product;
     } )
+
+  },
+  mounted:function(){
+    $('#slide').focusSlide();
   }
 
 }
@@ -54,7 +60,7 @@ export default {
     .slideFul {width:1440px; position:absolute; left:0;top:0; }
 .slideFul li{position:absolute; display: none;}
 .slideBtn {position:absolute; z-index:99; bottom:10px; width:100%; text-align:center;}
-.slideBtn span{display: inline-block; background-color:#ccc; width: 10px; height: 10px; border-radius: 50%; color:#000; cursor:pointer;}
+.slideBtn span{display: inline-block; background-color:#ccc; width: 10px; height: 10px; border-radius: 50%; color:#000; cursor:pointer; margin-right: 10px;}
 .slideBtn span.on{color:#fff; background-color:#000;}
 .preBtn,.nextBtn{position: absolute; border: 1px solid #000000; z-index: 99; top:300px; background-color: #fff; cursor:pointer; }
 .nextBtn{right: 10px;}

@@ -11,6 +11,13 @@ var focusSlide = $.fn.focusSlide=function(options){
           fullScreen:false
               },
           opts= $.extend(defaults,options);
+
+/*           
+jq插件在vue中要注意初始化的时机必须在vue生命周期dom节点挂载之后（mounted） 
+ */
+
+  //   console.log(this)  
+
   //opts end
       var obj=this,
           scrollBox=obj.find(opts.scrollBox),
